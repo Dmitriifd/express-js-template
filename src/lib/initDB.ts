@@ -1,23 +1,18 @@
-import mongoose from 'mongoose';
-import { log, error, success, info } from './chalkLogger';
+import { DBAdapter, MongooseAdapter, PrismaAdapter } from './dbAdapter';
 import { config } from '@/config';
 
-export const initDB = async (): Promise<void> => {
-  try {
-    await mongoose.connect(config.MONGO_URI);
-    log(success('Successfully connected to MongoDB'));
+let dbAdapter: DBAdapter;
 
-    mongoose.connection.on('error', (err) => {
-      log(error('MongoDB connection error:'));
-      console.error(err);
-    });
+export const initDB = async (): Promise<DBAdapter> => {
+  dbAdapter = config.USE_PRISMA ? new PrismaAdapter() : new MongooseAdapter();
+  await dbAdapter.connect();
+  return dbAdapter;
+};
 
-    mongoose.connection.on('disconnected', () => {
-      log(info('MongoDB disconnected'));
-    });
-  } catch (err) {
-    log(error('Error connecting to MongoDB:'));
-    console.error(err);
-    process.exit(1);
+export const closeDB = async (): Promise<void> => {
+  if (dbAdapter) {
+    await dbAdapter.disconnect();
   }
 };
+
+export const getDBAdapter = (): DBAdapter => dbAdapter;

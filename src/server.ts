@@ -1,13 +1,21 @@
 import app from './app';
 import { config } from './config';
-import { log, error, success } from './lib/chalkLogger';
-import { initDB } from './lib/initDB';
+import { log, error, info } from './lib/chalkLogger';
+import { initDB, closeDB } from './lib/initDB';
 
 const startServer = async () => {
   try {
     await initDB();
-    app.listen(config.PORT, () => {
-      log(success(`Сервер запущен на http://localhost:${config.PORT}`));
+    const server = app.listen(config.PORT, () => {
+      log(info(`Сервер запущен на http://localhost:${config.PORT}`));
+    });
+
+    process.on('SIGINT', async () => {
+      await closeDB();
+      server.close(() => {
+        log(info('Server closed'));
+        process.exit(0);
+      });
     });
   } catch (err) {
     log(error('Error starting server:'));
