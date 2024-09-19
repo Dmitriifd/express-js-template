@@ -27,3 +27,7 @@ coverage/
 *.tgz
 *.swp
 *.swo
+
+# Prisma
+/prisma/client/
+/prisma/migrations/
