@@ -5,7 +5,6 @@ import routes from './routes';
 import errorHandler from './middlewares/errorHandler';
 import { AppError } from './utils/appError';
 
-
 const app = express();
 
 // Middleware
