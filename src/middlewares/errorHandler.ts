@@ -1,9 +1,9 @@
 import { AppError } from '@/utils/appError';
-import { Request, Response, NextFunction } from 'express';
+import { Request, Response } from 'express';
 import { ZodError } from 'zod';
 
-const errorHandler = (err: Error, req: Request, res: Response, next: NextFunction) => {
-  
+const errorHandler = (err: Error, req: Request, res: Response) => {
+
   if (err instanceof ZodError) {
     return res.status(400).json({
       status: 'fail',
