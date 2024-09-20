@@ -7,7 +7,8 @@
     "start": "node dist/server.js",
     "dev": "nodemon",
     "build": "tsc && tsc-alias",
-    "prepare": "husky && husky install"
+    "prepare": "husky && husky install",
+    "lint": "eslint ."
   },
   "keywords": [],
   "author": "",
@@ -30,6 +31,7 @@
     "@types/helmet": "^4.0.0",
     "@types/node": "^22.5.5",
     "eslint": "^9.10.0",
+    "eslint-plugin-sonarjs": "^2.0.2",
     "globals": "^15.9.0",
     "husky": "^9.1.6",
     "lint-staged": "^12.3.2",
