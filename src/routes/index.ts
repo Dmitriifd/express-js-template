@@ -1,6 +1,8 @@
 import { error, info, log, success } from '@/lib/chalkLogger';
 import userRoutes from './userRoutes';
 import express from 'express';
+import { validateRequest } from '@/middlewares/validateRequest';
+import { userSchema } from '@/schemas/userSchema';
 
 const router = express.Router();
 
@@ -19,6 +21,6 @@ router.get('/error', (req, res) => {
   res.status(500).send('Ошибка сервера');
 });
 
-router.use('/user', userRoutes);
+router.use('/user', validateRequest(userSchema), userRoutes);
 
 export default router;
