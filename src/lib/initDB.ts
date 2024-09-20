@@ -1,10 +1,10 @@
+import { env } from '@/config/env';
 import { DBAdapter, MongooseAdapter, PrismaAdapter } from './dbAdapter';
-import { config } from '@/config';
 
 let dbAdapter: DBAdapter;
 
 export const initDB = async (): Promise<DBAdapter> => {
-  dbAdapter = config.USE_PRISMA ? new PrismaAdapter() : new MongooseAdapter();
+  dbAdapter = env.USE_PRISMA ? new PrismaAdapter() : new MongooseAdapter();
   await dbAdapter.connect();
   return dbAdapter;
 };

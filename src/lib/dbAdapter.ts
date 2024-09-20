@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 import { PrismaClient } from '@prisma/client';
-import { config } from '@/config';
+import { env } from '@/config/env';
 import { log, error, success, info } from './chalkLogger';
 
 export interface DBAdapter {
@@ -11,7 +11,7 @@ export interface DBAdapter {
 export class MongooseAdapter implements DBAdapter {
   async connect(): Promise<void> {
     try {
-      await mongoose.connect(config.MONGO_URI);
+      await mongoose.connect(env.MONGO_URI);
       log(success('Successfully connected to MongoDB'));
 
       mongoose.connection.on('error', (err) => {

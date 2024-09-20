@@ -1,13 +1,14 @@
 import app from './app';
-import { config } from './config';
+import { env } from './config/env';
+
 import { log, error, info } from './lib/chalkLogger';
 import { initDB, closeDB } from './lib/initDB';
 
 const startServer = async () => {
   try {
     await initDB();
-    const server = app.listen(config.PORT, () => {
-      log(info(`Сервер запущен на http://localhost:${config.PORT}`));
+    const server = app.listen(env.PORT, () => {
+      log(info(`Сервер запущен на http://localhost:${env.PORT}`));
     });
 
     process.on('SIGINT', async () => {
