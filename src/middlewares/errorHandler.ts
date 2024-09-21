@@ -1,3 +1,4 @@
+import { env } from '@/config/env';
 import { AppError } from '@/utils/appError';
 import { NextFunction, Request, Response } from 'express';
 import { ZodError } from 'zod';
@@ -24,7 +25,7 @@ const errorHandler = (err: Error, req: Request, res: Response, _next: NextFuncti
   return res.status(500).json({
     status: 'error',
     message: 'Internal Server Error',
-    details: process.env.NODE_ENV === 'development' ? err.message : undefined,
+    details: env.NODE_ENV === 'development' ? err.message : undefined,
   });
 };
 
